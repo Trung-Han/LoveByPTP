@@ -84,6 +84,8 @@
       <button onclick="fontScale += 0.2">🔼</button>
       <button onclick="fontScale = Math.max(0.5, fontScale - 0.2)">🔽</button>
       <button onclick="fontScale = defaultFontScale">🔄</button>
+      <button onclick="fontScale += 0.5">➕</button>
+      <button onclick="fontScale = Math.max(0.5, fontScale - 0.5)">➖</button>
       <button onclick="openPopup()">✍️</button>
       <button onclick="document.getElementById('imageUpload').click()">🖼️</button>
     </div>
@@ -160,12 +162,12 @@ function createParticles(){particles=[];const numParticles=window.innerWidth<500
 createParticles();window.addEventListener("resize",createParticles);
 
 // === FONT SCALE ===
-let fontScale=2.2;const defaultFontScale=2.2;
+let fontScale=1.8;const defaultFontScale=1.8;
 const mainBtn=document.getElementById("mainBtn");const submenu=document.getElementById("submenu");const menu=document.querySelector(".menu");
 mainBtn.addEventListener("click",()=>{submenu.classList.toggle("show");menu.classList.toggle("open");});
 
 // === TEXT & IMAGE UPDATE ===
-let displayTexts = ["Coder Được Tạo", "Bởi", "Phan Trọng Phúc Coder"]; // mảng chữ mặc định
+let displayTexts = ["Phan Trọng Phúc Coder", "I Love You ❤️", "Forever & Always"]; // mảng chữ mặc định
 
 // popup
 function openPopup() {
