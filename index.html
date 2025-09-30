@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Love PTP ❤️</title>
+<title>Love PTP❤️</title>
 <style>
   body {margin:0;height:100vh;background:black;overflow:hidden;}
   canvas {display:block;position:fixed;top:0;left:0;width:100%;height:100%;}
@@ -75,7 +75,7 @@
 </head>
 <body>
   <canvas id="heartCanvas"></canvas>
-  <div class="copyright" >Copyright - Phan Trọng Phúc Coder ❤️</div>
+  <div class="copyright">Copyright-Phan Trọng Phúc Coder</div>
 
   <!-- Menu -->
   <div class="menu">
@@ -106,7 +106,12 @@
 <script>
 const canvas=document.getElementById("heartCanvas");
 const ctx=canvas.getContext("2d");
-function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+function resizeCanvas() {
+  const ratio = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * ratio;
+  canvas.height = window.innerHeight * ratio;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+}
 resizeCanvas();window.addEventListener("resize",resizeCanvas);
 
 // === SAO ===
@@ -128,7 +133,7 @@ createRandomImages();
 function drawBackgroundImages(){bgImages.forEach(obj=>{if(obj.img.complete){obj.x+=obj.vx;obj.y+=obj.vy;
   if(obj.x<-100)obj.x=canvas.width+50;if(obj.x>canvas.width+100)obj.x=-50;
   if(obj.y<-100)obj.y=canvas.height+50;if(obj.y>canvas.height+100)obj.y=-50;
-  const imgSize=Math.min(canvas.width,canvas.height)*obj.size;ctx.save();ctx.globalAlpha=0.35;
+  const imgSize=Math.min(canvas.width,canvas.height)*obj.size;ctx.save();ctx.globalAlpha=1.0;
   ctx.drawImage(obj.img,obj.x,obj.y,imgSize,imgSize);ctx.restore();}});}
 
 // === SAO BĂNG ===
