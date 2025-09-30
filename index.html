@@ -75,13 +75,12 @@
 </head>
 <body>
   <canvas id="heartCanvas"></canvas>
-  <div class="copyright">Copyright - Phan Trọng Phúc Coder</div>
+  <div class="copyright">Copyright-Phan Trọng Phúc Coder</div>
 
   <!-- Menu -->
   <div class="menu">
     <button id="mainBtn">⚙️</button>
-    \1
-      <button onclick="toggleImageMode()">🔍</button>
+    <div class="submenu" id="submenu">
       <button onclick="fontScale += 0.2">🔼</button>
       <button onclick="fontScale = Math.max(0.5, fontScale - 0.2)">🔽</button>
       <button onclick="fontScale = defaultFontScale">🔄</button>
@@ -107,12 +106,7 @@
 <script>
 const canvas=document.getElementById("heartCanvas");
 const ctx=canvas.getContext("2d");
-function resizeCanvas() {
-  const ratio = window.devicePixelRatio || 1;
-  canvas.width = window.innerWidth * ratio;
-  canvas.height = window.innerHeight * ratio;
-  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-}
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
 resizeCanvas();window.addEventListener("resize",resizeCanvas);
 
 // === SAO ===
@@ -134,7 +128,7 @@ createRandomImages();
 function drawBackgroundImages(){bgImages.forEach(obj=>{if(obj.img.complete){obj.x+=obj.vx;obj.y+=obj.vy;
   if(obj.x<-100)obj.x=canvas.width+50;if(obj.x>canvas.width+100)obj.x=-50;
   if(obj.y<-100)obj.y=canvas.height+50;if(obj.y>canvas.height+100)obj.y=-50;
-  const imgSize=Math.min(canvas.width,canvas.height)*obj.size;ctx.save();ctx.globalAlpha=1.0;
+  const imgSize=Math.min(canvas.width,canvas.height)*obj.size;ctx.save();ctx.globalAlpha=0.35;
   ctx.drawImage(obj.img,obj.x,obj.y,imgSize,imgSize);ctx.restore();}});}
 
 // === SAO BĂNG ===
@@ -199,13 +193,6 @@ function updateImages(event) {
     }
     createRandomImages();
   }
-}
-
-
-let useOriginalSize = true; // mặc định giữ nguyên kích thước gốc
-
-function toggleImageMode() {
-  useOriginalSize = !useOriginalSize;
 }
 
 // === ANIMATE ===
