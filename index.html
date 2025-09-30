@@ -96,7 +96,7 @@
   <div class="popup" id="popup">
     <div class="popup-content">
       <h2>Nhập chữ</h2>
-      <input type="text" id="popupText" placeholder="Nhập chữ của bạn...">
+      <textarea id="popupText" rows="4" placeholder="Nhập nhiều dòng..."></textarea>
       <br>
       <button class="save-btn" onclick="saveText()">Lưu</button>
       <button class="close-btn" onclick="closePopup()">Đóng</button>
@@ -165,12 +165,12 @@ const mainBtn=document.getElementById("mainBtn");const submenu=document.getEleme
 mainBtn.addEventListener("click",()=>{submenu.classList.toggle("show");menu.classList.toggle("open");});
 
 // === TEXT & IMAGE UPDATE ===
-let displayText = "Phan Trọng Phúc Coder"; // chữ mặc định
+let displayTexts = ["Phan Trọng Phúc Coder"]; // mảng chữ mặc định
 
 // popup
 function openPopup() {
   document.getElementById("popup").style.display = "flex";
-  document.getElementById("popupText").value = displayText;
+  document.getElementById("popupText").value = displayTexts.join("\n");
 }
 function closePopup() {
   document.getElementById("popup").style.display = "none";
@@ -178,7 +178,7 @@ function closePopup() {
 function saveText() {
   const val = document.getElementById("popupText").value;
   if (val.trim() !== "") {
-    displayText = val;
+    displayTexts = val.split("\n").map(s => s.trim()).filter(s => s !== "");
   }
   closePopup();
 }
@@ -208,10 +208,27 @@ drawBackgroundImages();
 
 ctx.save();ctx.translate(canvas.width/2,canvas.height/2);
 heartbeat+=0.05;const pulseStrength=(Math.sin(heartbeat)+1)/2;
-// Chữ
-ctx.save();ctx.font=`bold ${scale*fontScale}px sans-serif`;ctx.fillStyle="white";ctx.textAlign="center";
-ctx.shadowColor="rgba(255,0,120,0.9)";ctx.shadowBlur=20;ctx.lineWidth=3;ctx.strokeStyle="rgba(255,0,0,0.6)";
-ctx.strokeText(displayText,0,0);ctx.fillText(displayText,0,0);ctx.restore();
+// Chữ nhiều dòng
+ctx.save();
+ctx.font = `bold ${scale*fontScale}px sans-serif`;
+ctx.fillStyle = "white";
+ctx.textAlign = "center";
+ctx.shadowColor = "rgba(255,0,120,0.9)";
+ctx.shadowBlur = 20;
+ctx.lineWidth = 3;
+ctx.strokeStyle = "rgba(255,0,0,0.6)";
+
+// Tính tổng chiều cao để căn giữa
+let lineHeight = scale * fontScale * 1.3;
+let totalHeight = lineHeight * displayTexts.length;
+let startY = -(totalHeight / 2) + lineHeight / 2;
+
+displayTexts.forEach((txt, i) => {
+  let y = startY + i * lineHeight;
+  ctx.strokeText(txt, 0, y);
+  ctx.fillText(txt, 0, y);
+});
+ctx.restore();
 // Tim
 const r=255;const g=Math.floor(102*pulseStrength);const b=Math.floor(178*pulseStrength);const color=`rgb(${r},${g},${b})`;
 particles.forEach(p=>{p.angle+=p.speed;const jitterX=Math.cos(p.angle)*2;const jitterY=Math.sin(p.angle)*2;
